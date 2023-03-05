@@ -12,8 +12,9 @@ function App() {
     setMessage('Loading ffmpeg-core.js');
     await ffmpeg.load();
     setMessage('Start transcoding');
-    ffmpeg.FS('writeFile', 'test.avi', await fetchFile('/flame.avi'));
-    await ffmpeg.run('-i', 'test.avi', 'test.mp4');
+    ffmpeg.FS('writeFile', 'test.avi', await fetchFile('https://res.cloudinary.com/dfcktbv91/video/upload/v1677595056/w0fsbvt2gvnwyazxcutaubffzb2l.mov'));
+    // await ffmpeg.run('-i', 'test.avi', 'test.mp4');
+    await ffmpeg.run('-ss', '00:00:01', '-to', '00:00:10', '-i', 'test.avi', '-c', 'copy', 'test.mp4');
     setMessage('Complete transcoding');
     const data = ffmpeg.FS('readFile', 'test.mp4');
     setVideoSrc(URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' })));
